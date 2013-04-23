@@ -96,6 +96,7 @@ def main():
     action.add_argument('-l','--list', action='store_true', help='List current offsite backups')
     action.add_argument('-b','--backup', action='store_true', help='run the backup')
     action.add_argument('-r','--restore', help='restore file')
+    action.add_argument('-x','--delete', help='delete backup')
     parser.add_argument('-d','--dest', help='restore destination')
 
     args = parser.parse_args()
@@ -116,7 +117,7 @@ def main():
         backup = S3Backup(access_key=ACCESS_KEY,secret_key=SECRET_KEY,s3_bucket=S3_BUCKET)
     except Exception,e:
         print e
-        sys.stderr.write("S3 Bucket info is wrong")
+        sys.stderr.write("S3 Bucket info is wrong\n")
         log.error(e)
         exit(0)
 
@@ -126,11 +127,11 @@ def main():
 
         #if user didn't input a destination for the restore file
         if dest is None:
-            sys.stderr.write("Please input a path for the destination of the restore file (-d switch)")
+            sys.stderr.write("Please input a path for the destination of the restore file (-d switch)\n")
             exit(0)
         #if dest directory doesn't exist
         elif not os.path.exists(dest):
-            sys.stderr.write("Specified destination directory doesn't exist")
+            sys.stderr.write("Specified destination directory doesn't exist\n")
             exit(0)
         else:
             try:
@@ -142,10 +143,11 @@ def main():
                 out_file = str(dest + args.restore)
                 shutil.move(file.name,dest+os.path.basename(args.restore))
                 log.info('%s restored successfully' % file.name)
+		print '%s restored successfully' % file.name
                 exit(0)
             except exceptions.KeyDoesNotExist,e:
                 log.debug(e)
-                sys.stderr.write("Offsite backup does not exist")
+                sys.stderr.write("Offsite backup does not exist\n")
                 exit(0)
 
 
@@ -168,5 +170,18 @@ def main():
             out.add(path)
         out.close()
         backup.put(file_name,open(up,mode='r'))
-        #os.remove(out)
+	print "Backup was successful"
+	exit(0)	
+    	
+    #delete
+    if args.delete:
+        try:
+	   backup.delete(args.delete)
+	   log.info("file successfully deleted from backend")
+           print "File successfuly deleted"
+	   exit(0)
+	except Exception, e:
+	   log.debug(e)	
+	   sys.stderr.write("Backup does not exist on backend\n")
+	   exit(0)
 

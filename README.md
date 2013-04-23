@@ -44,7 +44,7 @@ Note, after you restore the backup you will have to untar and uncompress it.
 
 THis command will delete your offsite backup permanently.  Proceed with caution
 
-<pre><code>$ pys3backup -d backup.tar.gz</code></pre>
+<pre><code>$ pys3backup -x backup.tar.gz</code></pre>
 
 ## Tests
 
