@@ -9,9 +9,7 @@ restore them back to disk
 
 To install on a *nix system:
 
-<pre><code>
-$ python setup.py install
-</code></pre>
+<pre><code>$ python setup.py install</code></pre>
 
 ## Usage
 
@@ -25,26 +23,20 @@ of files that need to be backed up.
 
 The following will back up the specified data and put it into the s3 bucket
 
-<pre><code>
-$ pys3backup -b
-</code></pre>
+<pre><code>$ pys3backup -b</code></pre>
 
 Putting this command on a regular cron job will keep your data backed up.
 
 ### List
 
 THis will list all backups in the S3 bucket
-<pre><code>
-$ pys3backup -l
-</code></pre>
+<pre><code>$ pys3backup -l</code></pre>
 
 ### Restore
 
 For the restore command, you must specify the backup you want to restore, and also the destination
 
-<pre><code>
-$ pys -r backup.tar.gz -d ~/
-</code></code>
+<pre><code>$ pys -r backup.tar.gz -d ~/ </code></pre>
 
 Note, after you restore the backup you will have to untar and uncompress it.
 
@@ -52,9 +44,7 @@ Note, after you restore the backup you will have to untar and uncompress it.
 
 THis command will delete your offsite backup permanently.  Proceed with caution
 
-<pre><code>
-$ pys3backup -d backup.tar.gz
-</code></code>
+<pre><code>$ pys3backup -d backup.tar.gz</code></pre>
 
 ## Tests
 
@@ -63,6 +53,9 @@ All unit tests are in pysbackup_test.py
 ## Contributors
 
 Software is provided as is, feel free to do whatever you want with it
+
+email:rmalleman AT gmail
+twitter: @mattinsaltlake
 
 
 ## License
