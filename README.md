@@ -13,7 +13,7 @@ To install on a *nix system:
 
 ## Usage
 
-To use this utility, you must place a configuration file called .pys3backup.py in your home folder.  The configuration
+To use this utility, you must place a configuration file called .pys3backup in your home folder.  The configuration
 file must contain the two sections listed in the sampleconfig.ini.  You can sign up to use an Amazon Web Services account
 at http://aws.amazon.com/.  Once you sign up, put your access key, secret key, and s3 bucket in the appropriate section
 of the configuration file.  In the backup portion of the configuration file, the only thing needed is a comma delmited list
@@ -52,10 +52,10 @@ All unit tests are in pysbackup_test.py
 
 ## Contributors
 
-Software is provided as is, feel free to do whatever you want with it
+Software is provided as is, feel free to do whatever non-evil things you want with it
 
-email:rmalleman AT gmail
-twitter: @mattinsaltlake
+<pre>email:rmalleman AT gmail</pre>
+<pre>twitter: @mattinsaltlake</pre>
 
 
 ## License
