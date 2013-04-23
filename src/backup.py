@@ -134,14 +134,11 @@ def main():
                 file = backup.get(args.restore)
                 if file is None:
                     log.error("%s doesn't exist in the s3 bucket" % args.restore)
+                    exit(0)
                 file.seek(0)
                 out_file = str(dest + args.restore)
                 shutil.move(file.name,dest+os.path.basename(args.restore))
-                print dest+os.path.basename(args.restore)
-                #os.rename(file.name,dest+os.path.basename(args.restore))
                 log.info('%s restored successfully' % file.name)
-                #print dest+file.name
-                #os.rename(dest+file.name,dest+args.restore)
                 exit(0)
             except Exception,e:
                 import traceback
