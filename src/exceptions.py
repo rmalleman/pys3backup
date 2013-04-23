@@ -8,4 +8,4 @@ class KeyDoesNotExist(Exception):
         self.key = key
 
     def __str__(self):
-        return 'Web Service Unavailable (%s)' % (self.key)
+        return 'File does not exist on the S3 bucket (%s)' % (self.key)
