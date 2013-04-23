@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 from boto.exception import S3ResponseError
 from boto.s3.key import Key
 
-from pys3backup import configuration
+from pys3backup import configuration,exceptions
 
 
 __author__ = 'matt'
@@ -47,16 +47,18 @@ class S3Backup:
 
     def get(self, key):
         """Get the file associated with key"""
+        try:
+            get_key = Key(self.s3_bucket)
+            get_key.key = key
+            get_file = tempfile.NamedTemporaryFile(mode='w+t',delete=False)
 
-        get_key = Key(self.s3_bucket)
-        get_key.key = key
-        get_file = tempfile.NamedTemporaryFile(mode='w+t',delete=False)
+            #get_file = tempfile.mkstemp()
+            get_key.get_contents_to_file(get_file)
 
-        #get_file = tempfile.mkstemp()
-        get_key.get_contents_to_file(get_file)
-
-        get_file.seek(0)
-        return get_file
+            get_file.seek(0)
+            return get_file
+        except Exception,e:
+            raise exceptions.KeyDoesNotExist(get_key)
 
     def put(self, key, file):
         """Puts the file into the s3 bucket, and associates it with the key"""
@@ -113,6 +115,7 @@ def main():
     try:
         backup = S3Backup(access_key=ACCESS_KEY,secret_key=SECRET_KEY,s3_bucket=S3_BUCKET)
     except Exception,e:
+        print e
         sys.stderr.write("S3 Bucket info is wrong")
         log.error(e)
         exit(0)
@@ -140,11 +143,12 @@ def main():
                 shutil.move(file.name,dest+os.path.basename(args.restore))
                 log.info('%s restored successfully' % file.name)
                 exit(0)
-            except Exception,e:
-                import traceback
-                print traceback.format_exc()
-                log.error(e)
-                exit(-1)
+            except exceptions.KeyDoesNotExist,e:
+                log.debug(e)
+                sys.stderr.write("Offsite backup does not exist")
+                exit(0)
+
+
     if args.list:
         for key in backup.list():
             print key
