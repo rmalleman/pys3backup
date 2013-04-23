@@ -36,7 +36,7 @@ THis will list all backups in the S3 bucket
 
 For the restore command, you must specify the backup you want to restore, and also the destination
 
-<pre><code>$ pys -r backup.tar.gz -d ~/ </code></pre>
+<pre><code>$ pys3backup -r backup.tar.gz -d ~/ </code></pre>
 
 Note, after you restore the backup you will have to untar and uncompress it.
 
