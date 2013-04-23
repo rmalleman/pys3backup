@@ -27,7 +27,6 @@ class PyS3BackupTestCases(unittest.TestCase):
         self.assertIsNotNone(self.backup)
         self.backup.put("buh",self.sample_file)
         self.assertIsNotNone(self.backup.list())
-        #self.assertEquals(hashlib.md5(self.sample_file).digest(),hashlib.md5(self.backup.get("buh")))
         self.assertIsNotNone(self.backup.get("buh"))
         self.backup.delete("buh")
 
